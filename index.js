@@ -11,8 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 connect.createConnection();
 
-app.use('/api/v1/users', require('./routes/userRoutes'));
 app.use('/api/v1/questions', require('./routes/questionRoutes'));
+app.use('/api/v1/users', require('./routes/userRoutes'));
 // app.use('/api/v1/auth', require('./routes/authRoutes'));
 
 
