@@ -25,7 +25,9 @@ module.exports = {
         correct_answer: Joi.string().alphanum(),
         incorrect_answers: Joi.array()
     }),
-    // id: Joi.object({
-    //     id: Joi.objectId()
-    // })
+    findOne: Joi.object({
+        _id: Joi.objectId().optional(),
+        email: Joi.string().email().optional(),
+        username: Joi.string().alphanum().optional()
+    })
 }

@@ -96,24 +96,26 @@ module.exports = {
         }
         return response;
     },
-    findOne: async(dataFromController) => {
+    getById: async(userId) => {
         const response = { status: false };
         try {
             const data = {
-                findQuery: dataFromController,
-                model: User,
+                findQuery: {
+                    _id: mongoose.Types.ObjectId(userId)
+                },
+                model: Question,
                 projection: { __v: false }
             };
 
-            const responseFromDB = await crudRepository.findOne(data);
+            const responseFromDB = await crudRepository.findById(data);
             if (responseFromDB.status === 200) {
                 response.result = responseFromDB.result;
             }
             response.status = responseFromDB.status;
         } catch (error) {
             response.error = error;
-            console.log(`ERROR-userService-findOne: ${error}`);
+            console.log(`ERROR-userService-getById: ${error}`);
         }
         return response;
-    }
+    },
 }

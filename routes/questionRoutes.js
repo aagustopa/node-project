@@ -25,4 +25,9 @@ router.delete('/delete/:id',
     joiSchemaValidation.validate(questionSchema.id, 'params'),
     questionController.delete);
 
+router.get('/getById/:id',
+    joiSchemaValidation.validate(questionSchema.id, 'params'),
+    questionController.getById
+);
+
 module.exports = router;

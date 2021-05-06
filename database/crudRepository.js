@@ -68,10 +68,10 @@ module.exports.findOneAndDelete = async(data) => {
     return response;
 }
 
-module.exports.findOne = async(data) => {
+module.exports.findById = async(data) => {
     const response = { status: 500 };
     try {
-        const doc = await data.model.findOne(
+        const doc = await data.model.findById(
             data.findQuery,
             data.projection);
         if (doc) {
@@ -82,7 +82,7 @@ module.exports.findOne = async(data) => {
         }
     } catch (error) {
         response.error = error;
-        console.log(`ERROR-crudRepository-findOne: ${error}`);
+        console.log(`ERROR-crudRepository-findById: ${error}`);
     }
     return response;
 };
