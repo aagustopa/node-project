@@ -1,11 +1,12 @@
 const axios = require('axios');
-const Question = require('../models/db/questionModel');
-const crudRepository = require('../database/questionsRepository');
+const User = require('../models/db/userModel');
+const crudRepository = require('../database/crudRepository');
+const mongoose = require('mongoose');
 
 module.exports = {
-    getAll: async function(amount) {
+    getAll: async function(page) {
         try {
-            const resFromServer = await axios(`https://opentdb.com/api.php?amount=${amount}`);
+            const resFromServer = await axios(`https://opentdb.com/api.php?amount=${page}`);
             if (resFromServer.status === 200) {
                 return {
                     status: resFromServer.status,
@@ -22,5 +23,5 @@ module.exports = {
                 msg: err
             }
         }
-    },
+    }
 }
