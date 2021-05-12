@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const usersController = require('../controllers/usersController');
+const questionsController = require('../controllers/questionsController');
 const joiSchemaValidation = require('../middlewares/joiSchemaValidation');
-const usersSchemas = require('../models/joi/usersSchemas');
+const questionSchema = require('../models/joi/questionSchema');
 
 router.get('/list',
-    joiSchemaValidation.validate(usersSchemas.getAll, 'query'),
-    usersController.getAll
+    joiSchemaValidation.validate(questionSchema.getAll, 'query'),
+    questionsController.getAll
 );
 
 

@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }))
 db.createConnection();
 
 app.use('/api/v1/questions', require('./routes/questionsRoutes'));
+app.use('/api/v1/users', require('./routes/usersRoutes'));
 
 app.listen(process.env.PORT, function() {
     console.log('Server start!', 
