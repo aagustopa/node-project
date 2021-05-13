@@ -1,3 +1,5 @@
+const searchesService = require('../services/searchesService');
+
 const questionsService = require('../services/questionsService');
 
 module.exports.getAll = async function(req, res) {
@@ -5,9 +7,8 @@ module.exports.getAll = async function(req, res) {
     try {
         const amount = req.query.amount || 10;
         const resFromService = await questionsService.getAll(amount);
-        console.log(resFromService.data);
         if (resFromService.status === 200) {
-            response.msg = 'All Searchs selected successfully';
+            response.msg = resFromService.msg;
             response.body = resFromService.result;
         } else if (resFromService.status === 404) {
             response.msg = 'Search not found';
@@ -26,7 +27,7 @@ module.exports.create = async (req, res) => {
     const responseObj = { status: 500, message: 'Internal server error' };
     try {
         const dataCreate = req.body;
-        const resFromService = await questionsService.create(dataCreate);
+        const resFromService = await searchesService.create(dataCreate);
         if (resFromService.status) {
             responseObj.body = resFromService.result;
             responseObj.message = `Search created successfully`;
@@ -44,7 +45,7 @@ module.exports.update = async function(req, res) {
     try {
         const dataUpdate = req.body;
         dataUpdate.id = req.params.id;
-        const resFromService = await questionsService.update(dataUpdate);
+        const resFromService = await searchesService.update(dataUpdate);
         if (resFromService.status === 200) {
             response.msg = 'Search updated successfully';
             response.body = resFromService.result;
@@ -65,7 +66,7 @@ module.exports.delete = async function(req, res) {
     const response = { status: 500, msg: 'Server Error' };
     try {
         const SearchId = req.params.id;
-        const resFromService = await questionsService.delete(SearchId);
+        const resFromService = await searchesService.delete(SearchId);
         if (resFromService.status === 200) {
             response.msg = 'Search deleted successfully';
             response.body = resFromService.result;
@@ -86,7 +87,7 @@ module.exports.getById = async function(req, res) {
     const response = { status: 500, msg: 'Server Error' };
     try {
         const SearchId = req.params.id;
-        const resFromService = await questionsService.getById(SearchId);
+        const resFromService = await searchesService.getById(SearchId);
         if (resFromService.status === 200) {
             response.msg = 'Search selected successfully';
             response.body = resFromService.result;
@@ -111,7 +112,7 @@ module.exports.between = async function(req, res) {
             start: req.query.start,
             end: req.query.end
         };
-        const resFromService = await questionsService.between(dates);
+        const resFromService = await searchesService.between(dates);
         if (resFromService.status === 200) {
             response.msg = 'Search between selected successfully';
             response.body = resFromService.result;

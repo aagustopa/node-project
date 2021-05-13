@@ -3,8 +3,7 @@ Joi.objectId = require('joi-objectid')(Joi)
 
 module.exports = {
     getAll: Joi.object({
-        _id: Joi.objectId().optional(),
-        time: Joi.date().timestamp(),
+        amount: Joi.number().integer().min(1).max(50).optional()
     }),
     id: Joi.object({
         id: Joi.objectId(),
