@@ -4,8 +4,11 @@ const joiSchemaValidation = require('../middlewares/joiSchemaValidation');
 const searchesSchemas = require('../models/joi/searchesSchema');
 const searchesController = require('../controllers/searchesController');
 
-router.get('/list', searchesController.getAll);
-
+router.get('/list', 
+    // tokenValidation.validate,
+    joiSchemaValidation.validate(searchesSchemas.question, 'query'),
+    searchesController.question
+);
 router.post('/create',
     // tokenValidation.validate,
     joiSchemaValidation.validate(searchesSchemas.create, 'body'),
@@ -32,5 +35,6 @@ router.get('/between',
     joiSchemaValidation.validate(searchesSchemas.date, 'query'),
     searchesController.between
 );
+
 
 module.exports = router;

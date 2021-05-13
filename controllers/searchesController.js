@@ -1,29 +1,31 @@
 const searchesService = require('../services/searchesService');
 
-const questionsService = require('../services/questionsService');
-
-module.exports.getAll = async function (req, res) {
-    const response = {
+module.exports.question = async (req, res) => {
+    const responseObj = {
         status: 500,
-        msg: 'Server Error'
+        message: 'Internal server error'
     };
     try {
-        const amount = req.query.amount || 10;
-        const resFromService = await questionsService.getAll(amount);
-        if (resFromService.status === 200) {
-            response.msg = resFromService.msg;
-            response.body = resFromService.result;
-        } else if (resFromService.status === 404) {
-            response.msg = 'Search not found';
-        } else {
-            response.msg = resFromService.error;
+        const data = {
+            amount: req.query.amount,
+            category: req.query.category,
+            difficulty: req.query.difficulty,
+            type: req.query.type
         }
-        response.status = resFromService.status;
-    } catch (err) {
-        response.msg = err;
-        console.log(`ERROR-SearchesController-getAll: ${err}`);
+        if (req.query.category == undefined) data.category = "";
+        if (req.query.difficulty == undefined) data.difficulty = "";
+        if (req.query.type == undefined) data.type = "";
+        const responseFromService = await searchesService.questionAPI(data, req.token);
+        if (responseFromService.status) {
+            responseObj.body = responseFromService.result;
+            responseObj.message = `Busqueda created successfully`;
+            responseObj.status = 201;
+        }
+    } catch (error) {
+        responseObj.error = error;
+        console.log(`ERROR-busquedaController-question: ${error}`);
     }
-    res.status(response.status).send(response);
+    return res.status(responseObj.status).send(responseObj);
 }
 
 module.exports.create = async (req, res) => {

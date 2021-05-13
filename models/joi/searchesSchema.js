@@ -2,7 +2,7 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi)
 
 module.exports = {
-    getAll: Joi.object({
+    question: Joi.object({
         amount: Joi.number().integer().min(1).max(50).optional()
     }),
     id: Joi.object({

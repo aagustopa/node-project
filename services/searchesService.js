@@ -2,6 +2,7 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const crudRepository = require('../database/crudRepository');
 const Search = require('../models/db/searchModel');
+const Question = require('../models/db/questionModel');
 
 module.exports = {
     create: async (dataFromController) => {
@@ -137,5 +138,47 @@ module.exports = {
             console.log(`ERROR-searchService-datebetween: ${error}`);
         }
         return response;
-    }
+    },
+
+    questionAPI: async (dataFromController, token) => {
+        const responseObj = {
+            status: false
+        };
+        try {
+            const responseFromApi = await axios({
+                url: `https://opentdb.com/api.php?amount=${dataFromController.amount}`,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const now = new Date();
+            const busqueda = new Search({
+                date: now,
+                userId: ''
+            });
+            const responseFromRepository = await crudRepository.save(busqueda);
+            const data = await responseFromApi.data.results;
+            data.forEach(value => {
+                const pregunta = new Question({
+                    question: value.question,
+                    category: value.category,
+                    difficulty: value.difficulty,
+                    type: value.type,
+                    correct_answer: value.correct_answer,
+                    incorrect_answer: value.incorrect_answer,
+                    busqueda_id: busqueda._id,
+                });
+                crudRepository.save(pregunta);
+            });
+            if (responseFromRepository.status) {
+                responseObj.result = responseFromRepository.result;
+                responseObj.status = true;
+            }
+        } catch (error) {
+            responseObj.error = error;
+            console.log(`ERROR-searchesService-question: ${error}`);
+        }
+        return responseObj;
+    },
 }
