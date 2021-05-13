@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.model('Question', mongoose.Schema({
+module.exports = mongoose.model('QuestionDev1', mongoose.Schema({
     category: String,
     type: String,
     difficulty: String,
