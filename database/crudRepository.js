@@ -1,5 +1,7 @@
 module.exports.save = async (objToSave) => {
-    let responseObj = { status: false };
+    let responseObj = {
+        status: false
+    };
     try {
         const doc = await objToSave.save();
         responseObj = {
@@ -14,12 +16,17 @@ module.exports.save = async (objToSave) => {
 };;
 
 module.exports.findOneAndUpdate = async (data) => {
-    const response = { status: 500 };
+    const response = {
+        status: 500
+    };
     try {
         const doc = await data.model.findOneAndUpdate(
             data.findQuery,
-            data.updateQuery,
-            {new: true, projection: data.projection, useFindAndModify: false});
+            data.updateQuery, {
+                new: true,
+                projection: data.projection,
+                useFindAndModify: false
+            });
         if (doc) {
             response.status = 200;
             response.result = doc;
@@ -34,11 +41,14 @@ module.exports.findOneAndUpdate = async (data) => {
 };
 
 module.exports.findOneAndDelete = async (data) => {
-    const response = { status: 500 };
+    const response = {
+        status: 500
+    };
     try {
         const doc = await data.model.findOneAndDelete(
-            data.findQuery,
-            { projection: data.projection });
+            data.findQuery, {
+                projection: data.projection
+            });
         if (doc) {
             response.status = 200;
             response.result = doc;
@@ -53,7 +63,9 @@ module.exports.findOneAndDelete = async (data) => {
 };
 
 module.exports.findOne = async (data) => {
-    const response = { status: 500 };
+    const response = {
+        status: 500
+    };
     try {
         const doc = await data.model.findOne(
             data.findQuery,
@@ -72,7 +84,9 @@ module.exports.findOne = async (data) => {
 };
 
 module.exports.find = async (data) => {
-    const response = { status: 500 };
+    const response = {
+        status: 500
+    };
     try {
         const doc = await data.model.find(data.projection);
         if (doc) {
@@ -89,9 +103,16 @@ module.exports.find = async (data) => {
 };
 
 module.exports.findBetween = async (data) => {
-    const response = { status: 500 };
+    const response = {
+        status: 500
+    };
     try {
-        const doc = await data.model.find({date: {$gte: data.dates.start, $lte: data.dates.end}}, data.projection);
+        const doc = await data.model.find({
+            date: {
+                $gte: data.dates.start,
+                $lte: data.dates.end
+            }
+        }, data.projection);
         if (doc) {
             response.status = 200;
             response.result = doc;

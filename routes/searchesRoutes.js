@@ -18,18 +18,18 @@ router.put('/update/:id',
     searchesController.update
 );
 
-router.delete('/delete/:id', 
-    joiSchemaValidation.validate(searchesSchemas.id, 'params'), 
+router.delete('/delete/:id',
+    joiSchemaValidation.validate(searchesSchemas.id, 'params'),
     searchesController.delete
 );
 
-router.get('/get/:id', 
-    joiSchemaValidation.validate(searchesSchemas.id, 'params'), 
+router.get('/get/:id',
+    joiSchemaValidation.validate(searchesSchemas.id, 'params'),
     searchesController.getById
 );
 
-router.get('/between', 
-    joiSchemaValidation.validate(searchesSchemas.date, 'query'), 
+router.get('/between',
+    joiSchemaValidation.validate(searchesSchemas.date, 'query'),
     searchesController.between
 );
 

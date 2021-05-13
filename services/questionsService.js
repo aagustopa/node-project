@@ -4,7 +4,7 @@ const crudRepository = require('../database/crudRepository');
 const Search = require('../models/db/searchModel');
 
 module.exports = {
-    getAll: async function(amount) {
+    getAll: async function (amount) {
         try {
             const resFromServer = await axios(`https://opentdb.com/api.php?amount=${amount}`);
             if (resFromServer.status === 200) {

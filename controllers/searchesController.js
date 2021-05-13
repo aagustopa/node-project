@@ -2,8 +2,11 @@ const searchesService = require('../services/searchesService');
 
 const questionsService = require('../services/questionsService');
 
-module.exports.getAll = async function(req, res) {
-    const response = { status: 500, msg: 'Server Error' };
+module.exports.getAll = async function (req, res) {
+    const response = {
+        status: 500,
+        msg: 'Server Error'
+    };
     try {
         const amount = req.query.amount || 10;
         const resFromService = await questionsService.getAll(amount);
@@ -24,7 +27,10 @@ module.exports.getAll = async function(req, res) {
 }
 
 module.exports.create = async (req, res) => {
-    const responseObj = { status: 500, message: 'Internal server error' };
+    const responseObj = {
+        status: 500,
+        message: 'Internal server error'
+    };
     try {
         const dataCreate = req.body;
         const resFromService = await searchesService.create(dataCreate);
@@ -40,8 +46,11 @@ module.exports.create = async (req, res) => {
     return res.status(responseObj.status).send(responseObj);
 };
 
-module.exports.update = async function(req, res) {
-    const response = { status: 500, msg: 'Server Error' };
+module.exports.update = async function (req, res) {
+    const response = {
+        status: 500,
+        msg: 'Server Error'
+    };
     try {
         const dataUpdate = req.body;
         dataUpdate.id = req.params.id;
@@ -62,8 +71,11 @@ module.exports.update = async function(req, res) {
     res.status(response.status).send(response);
 }
 
-module.exports.delete = async function(req, res) {
-    const response = { status: 500, msg: 'Server Error' };
+module.exports.delete = async function (req, res) {
+    const response = {
+        status: 500,
+        msg: 'Server Error'
+    };
     try {
         const SearchId = req.params.id;
         const resFromService = await searchesService.delete(SearchId);
@@ -83,8 +95,11 @@ module.exports.delete = async function(req, res) {
     res.status(response.status).send(response);
 }
 
-module.exports.getById = async function(req, res) {
-    const response = { status: 500, msg: 'Server Error' };
+module.exports.getById = async function (req, res) {
+    const response = {
+        status: 500,
+        msg: 'Server Error'
+    };
     try {
         const SearchId = req.params.id;
         const resFromService = await searchesService.getById(SearchId);
@@ -105,8 +120,11 @@ module.exports.getById = async function(req, res) {
 }
 
 
-module.exports.between = async function(req, res) {
-    const response = { status: 500, msg: 'Server Error' };
+module.exports.between = async function (req, res) {
+    const response = {
+        status: 500,
+        msg: 'Server Error'
+    };
     try {
         const dates = {
             start: req.query.start,

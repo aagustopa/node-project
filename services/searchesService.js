@@ -5,7 +5,9 @@ const Search = require('../models/db/searchModel');
 
 module.exports = {
     create: async (dataFromController) => {
-        const response = { status: false };
+        const response = {
+            status: false
+        };
         try {
             const user = new Search(dataFromController);
             const responseFromDB = await crudRepository.save(user);
@@ -23,14 +25,18 @@ module.exports = {
     },
 
     update: async (dataFromController) => {
-        const response = { status: false };
+        const response = {
+            status: false
+        };
         try {
             const data = {
                 findQuery: {
                     _id: mongoose.Types.ObjectId(dataFromController.id)
                 },
                 model: Search,
-                projection: { __v: false },
+                projection: {
+                    __v: false
+                },
                 updateQuery: {}
             };
             if (dataFromController.userID) {
@@ -38,32 +44,36 @@ module.exports = {
             }
             if (dataFromController.date) {
                 data.updateQuery.date = dataFromController.date;
-            } 
-    
+            }
+
             const responseFromDB = await crudRepository.findOneAndUpdate(data);
-    
+
             if (responseFromDB.status === 200) {
                 response.result = responseFromDB.result;
             }
-            
+
             response.status = responseFromDB.status;
-        
+
         } catch (error) {
             response.error = error;
             console.log(`ERROR-searchService-update: ${error}`);
         }
         return response;
-    }, 
+    },
 
     delete: async (busquedaId) => {
-        const response = { status: false };
+        const response = {
+            status: false
+        };
         try {
             const data = {
                 findQuery: {
                     _id: mongoose.Types.ObjectId(busquedaId)
                 },
                 model: Search,
-                projection: { __v: false },
+                projection: {
+                    __v: false
+                },
                 DeleteQuery: {}
             };
             const responseFromDB = await crudRepository.findOneAndDelete(data);
@@ -76,17 +86,21 @@ module.exports = {
             console.log(`ERROR-searchService-delete: ${error}`);
         }
         return response;
-    }, 
+    },
 
     getById: async (busquedaId) => {
-        const response = { status: false };
+        const response = {
+            status: false
+        };
         try {
             const data = {
                 findQuery: {
                     _id: mongoose.Types.ObjectId(busquedaId)
                 },
                 model: Search,
-                projection: { __v: false },
+                projection: {
+                    __v: false
+                },
                 UpdateQuery: {}
             };
             const responseFromDB = await crudRepository.findOne(data);
@@ -99,15 +113,19 @@ module.exports = {
             console.log(`ERROR-searchService-getByID: ${error}`);
         }
         return response;
-    }, 
+    },
 
     between: async (dates) => {
-        const response = { status: false };
+        const response = {
+            status: false
+        };
         try {
             const data = {
                 dates,
                 model: Search,
-                projection: { __v: false },
+                projection: {
+                    __v: false
+                },
             };
             const responseFromDB = await crudRepository.findBetween(data);
             if (responseFromDB.status === 200) {
