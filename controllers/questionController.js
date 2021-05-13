@@ -107,3 +107,52 @@ module.exports.getById = async(req, res) => {
     }
     res.status(response.status).send(response);
 }
+
+module.exports.advancedSearch = async(req, res) => {
+    const response = { status: 500, msg: 'Server Error' };
+    try {
+        const data = {};
+        for (let [key, value] of Object.entries(req.query)) {
+            data[key] = value;
+        }
+        const responseFromService = await questionServices.findOne(data);
+        if (responseFromService.status === 200) {
+            response.msg = 'Question fetched successfully';
+            response.body = responseFromService.result;
+        } else if (responseFromService.status === 404) {
+            response.msg = 'Question not found';
+        } else {
+            response.msg = responseFromService.error;
+        }
+        response.status = responseFromService.status;
+    } catch (err) {
+        response.msg = err;
+        console.log(`ERROR-questionController-advancedSearch: ${err}`);
+    }
+    res.status(response.status).send(response);
+}
+module.exports.list = async function(req, res) {
+    const response = { status: 500, msg: 'Server Error' };
+    try {
+        const data = {
+            category: req.query.category,
+            type: req.query.type,
+            difficulty: req.query.difficulty,
+            question: req.query.question
+        }
+        const responseFromService = await questionServices.findAll(data);
+        if (responseFromService.status === 200) {
+            response.msg = 'Question fetched successfully';
+            response.body = responseFromService.result;
+        } else if (responseFromService.status === 404) {
+            response.msg = 'No quetions found';
+        } else {
+            response.msg = responseFromService.error;
+        }
+        response.status = responseFromService.status;
+    } catch (err) {
+        response.msg = err;
+        console.log(`ERROR-questionController-advancedSearch: ${err}`);
+    }
+    res.status(response.status).send(response);
+}

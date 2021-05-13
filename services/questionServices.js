@@ -118,4 +118,50 @@ module.exports = {
         }
         return response;
     },
+    findOne: async(dataFromController) => {
+        const response = { status: false };
+        try {
+            const data = {
+                findQuery: dataFromController,
+                model: Question,
+                projection: { __v: false }
+            };
+            const responseFromDB = await crudRepository.findOne(data);
+            if (responseFromDB.status === 200) {
+                response.result = responseFromDB.result;
+            }
+            response.status = responseFromDB.status;
+        } catch (error) {
+            response.error = error;
+            console.log(`ERROR-userService-findOne: ${error}`);
+        }
+        return response;
+    },
+    findAll: async(dataFromController) => {
+        const response = { status: false };
+        try {
+            const data = {
+                findQuery: {},
+                model: Question,
+                projection: { __v: false }
+            };
+
+            if (dataFromController.category && dataFromController.type && dataFromController.difficulty && dataFromController.question) {
+                data.category = dataFromController.category;
+                data.type = dataFromController.type;
+                data.difficulty = dataFromController.difficulty;
+                data.question = dataFromController.question;
+            }
+
+            const responseFromDB = await crudRepository.find(data);
+            if (responseFromDB.status === 200) {
+                response.result = responseFromDB.result;
+            }
+            response.status = responseFromDB.status;
+        } catch (error) {
+            response.error = error;
+            console.log(`ERROR-userService-findAll: ${error}`);
+        }
+        return response;
+    },
 }

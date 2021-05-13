@@ -3,11 +3,11 @@ Joi.objectId = require('joi-objectid')(Joi);
 
 module.exports = {
     create: Joi.object({
-        category: Joi.string().alphanum().required(),
-        type: Joi.string().alphanum().required(),
-        difficulty: Joi.string().alphanum().required(),
-        question: Joi.string().alphanum().required(),
-        correct_answer: Joi.string().alphanum().required(),
+        category: Joi.string().required(),
+        type: Joi.string().required(),
+        difficulty: Joi.string().required(),
+        question: Joi.string().required(),
+        correct_answer: Joi.string().required(),
         incorrect_answers: Joi.array().items(Joi.string().required())
     }),
     getAll: Joi.object({
@@ -18,16 +18,23 @@ module.exports = {
         id: Joi.objectId(),
     }),
     update: Joi.object({
-        category: Joi.string().alphanum(),
-        type: Joi.string().alphanum(),
-        difficulty: Joi.string().alphanum(),
-        question: Joi.string().alphanum(),
-        correct_answer: Joi.string().alphanum(),
+        category: Joi.string(),
+        type: Joi.string(),
+        difficulty: Joi.string(),
+        question: Joi.string(),
+        correct_answer: Joi.string(),
         incorrect_answers: Joi.array()
     }),
     findOne: Joi.object({
         _id: Joi.objectId().optional(),
         email: Joi.string().email().optional(),
         username: Joi.string().alphanum().optional()
+    }),
+    advancedSearch: Joi.object({
+        _id: Joi.objectId().optional(),
+        category: Joi.string().optional(),
+        type: Joi.string().optional(),
+        difficulty: Joi.string().optional(),
+        question: Joi.string().optional(),
     })
 }

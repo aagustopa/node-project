@@ -1,6 +1,7 @@
 const User = require('../models/db/userModel');
 const crudRepository = require('../database/crudRepository');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     create: async(dataFromController) => {
@@ -25,7 +26,7 @@ module.exports = {
         try {
             const data = {
                 findQuery: {
-                    _id: mongoose.Types.ObjectId(dataFromController._id)
+                    _id: mongoose.Types.ObjectId(dataFromController.id)
                 },
                 model: User,
                 projection: { __v: false },
@@ -54,7 +55,7 @@ module.exports = {
                 projection: { __v: false }
             };
             const responseFromDB = await crudRepository.findOne(data);
-            if (response.status === 200) {
+            if (responseFromDB.status === 200) {
                 response.result = responseFromDB.result;
             }
             response.status = responseFromDB.status;

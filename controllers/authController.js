@@ -1,13 +1,11 @@
 const userServices = require('../services/userServices');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 module.exports.login = async(req, res) => {
     const response = { status: 500, msg: 'Internal server error' };
     try {
-        const user = {
-            username: req.body.username,
-            password: req.body.password
-        }
+        const user = req.body;
         const responseFromService = await userServices.findOne(user);
         if (responseFromService.status === 200) {
             response.status = responseFromService.status;
