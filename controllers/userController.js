@@ -6,7 +6,7 @@ module.exports.create = async(req, res) => {
     const response = { status: 500, msg: 'Internal server error' };
     try {
         // user con pwd encriptada
-        // const hashPwd = await bcrypt.hash(req.body.password, salt);
+        // const hashPwd = await bcrypt.hash(req.body.password, 10);
         // const data = { username: req.body.username, password: hashPwd };
         const data = req.body;
         const responseFromService = await userServices.create(data);
